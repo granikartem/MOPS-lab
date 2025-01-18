@@ -1,0 +1,18 @@
+﻿server:
+  port: 9090
+
+spring:
+  application:
+    name: data-simulator
+
+data-simulation:
+  device-count: 100
+  frequency: 1
+  indication-bound: 40
+
+connections:
+  connection-specs:
+    iot-controller:
+      port: 8080
+      path: "/devices/%d/messages"
+      host: "http://localhost"
