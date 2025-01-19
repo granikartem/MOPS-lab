@@ -10,12 +10,13 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: admin
+    username: mops
     password: password
   data:
     mongodb:
       host: localhost
       port: 27017
-      username: admin
+      username: mops
       password: password
       authentication-database: admin
+      database: mops

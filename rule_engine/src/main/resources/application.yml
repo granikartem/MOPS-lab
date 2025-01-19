@@ -7,15 +7,16 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: admin
+    username: mops
     password: password
   data:
     mongodb:
       host: localhost
       port: 27017
-      username: admin
+      username: mops
       password: password
       authentication-database: admin
+      database: mops
 
 rabbitmq:
   queue-name: deviceMessages
@@ -32,5 +33,5 @@ rules:
       name: 'continuousRule1'
       field: 'indication'
       comparison-type: 'LESS_THAN_OR_EQUALS'
-      comparison-value: 20
-      longevity: 20
+      comparison-value: 30
+      longevity: 10

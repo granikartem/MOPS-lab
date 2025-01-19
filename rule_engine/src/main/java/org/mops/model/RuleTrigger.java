@@ -12,6 +12,7 @@ public class RuleTrigger  {
     @Id
     private String id;
     private int deviceId;
+    private String ruleType;
     private String ruleName;
     private long timestamp;
 }

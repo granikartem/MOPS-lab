@@ -6,8 +6,8 @@ spring:
     name: data-simulator
 
 data-simulation:
-  device-count: 100
-  frequency: 1
+  device-count: 10
+  frequency: 100
   indication-bound: 40
 
 connections:

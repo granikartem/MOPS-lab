@@ -1,20 +1,17 @@
-version: '3'
 services:
   rabbitmq:
-
     image: rabbitmq:3-management
     ports:
       - "5672:5672"
       - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_USER: mops
       RABBITMQ_DEFAULT_PASS: password
 
   mongodb:
     image: mongo:latest
-    container_name: mongodb
     ports:
       - "27017:27017"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_USERNAME: mops
       MONGO_INITDB_ROOT_PASSWORD: password

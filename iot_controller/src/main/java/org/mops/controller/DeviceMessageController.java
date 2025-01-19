@@ -1,10 +1,11 @@
 package org.mops.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.mops.dto.DeviceMessageDto;
+import org.mops.model.DeviceMessage;
 import org.mops.service.PersistenceService;
 import org.mops.service.RuleEngineService;
 import org.mops.service.ValidationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,11 +26,11 @@ public class DeviceMessageController {
     }
 
     @PostMapping("/devices/{deviceId}/messages")
-    public ResponseEntity<String> sendMessage(@PathVariable("deviceId") int deviceId, @RequestBody DeviceMessageDto message) {
+    public ResponseEntity<String> sendMessage(@PathVariable("deviceId") int deviceId, @RequestBody DeviceMessageDto message) throws JsonProcessingException {
         boolean isValid = validationService.validate(deviceId, message);
         if (isValid) {
-            persistenceService.saveMessage(message);
-            ruleEngineService.passMessage(message);
+            DeviceMessage deviceMessage = persistenceService.saveMessage(message);
+            ruleEngineService.passMessage(deviceMessage);
         }
         System.out.println(deviceId);
         System.out.println(message);
