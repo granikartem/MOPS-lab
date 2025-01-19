@@ -38,7 +38,7 @@ public class DeviceMessageService {
                             client.generateAndSendDeviceMessage(deviceId);
                         } catch (IOException | InterruptedException e) {
                             System.out.println("request failed");
-                            throw new RuntimeException(e);
+//                            throw new RuntimeException(e);
                         }
                     },
                     0, 5000 / dataProperties.getFrequency(), TimeUnit.MILLISECONDS);

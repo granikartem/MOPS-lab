@@ -19,7 +19,6 @@ public class DeviceMessageListener {
 
     @RabbitListener(queues = "${rabbitmq.queue-name}")
     public void receiveMessage(String deviceMessageJson) throws JsonProcessingException {
-        System.out.println(deviceMessageJson);
         DeviceMessage deviceMessage = objectMapper.readValue(deviceMessageJson, DeviceMessage.class);
 
         ruleTriggerService.processMessage(deviceMessage);

@@ -32,8 +32,6 @@ public class DeviceMessageController {
             DeviceMessage deviceMessage = persistenceService.saveMessage(message);
             ruleEngineService.passMessage(deviceMessage);
         }
-        System.out.println(deviceId);
-        System.out.println(message);
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 }

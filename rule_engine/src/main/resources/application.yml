@@ -5,13 +5,13 @@ spring:
   application:
     name: rule-engine
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: mops
     password: password
   data:
     mongodb:
-      host: localhost
+      host: mongodb
       port: 27017
       username: mops
       password: password

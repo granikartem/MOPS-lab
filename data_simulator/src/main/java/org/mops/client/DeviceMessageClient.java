@@ -56,7 +56,7 @@ public class DeviceMessageClient {
         );
         String messageJson = objectMapper.convertValue(deviceMessage, ObjectNode.class).toPrettyString();
 
-        System.out.println(messageJson);
+        System.out.println(url);
         return HttpRequest.newBuilder()
                 .uri(url)
                 .header("Content-Type", "application/json")

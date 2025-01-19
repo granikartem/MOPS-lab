@@ -1,4 +1,35 @@
 services:
+
+  iot-controller:
+    build:
+      context: iot_controller
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rabbitmq
+      - mongodb
+
+  data-simulator:
+    build:
+      context: data_simulator
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    depends_on:
+      - iot-controller
+
+  rule-engine:
+    build:
+      context: rule_engine
+      dockerfile: Dockerfile
+    ports:
+      - "6060:6060"
+    depends_on:
+      - iot-controller
+      - rabbitmq
+      - mongodb
+
   rabbitmq:
     image: rabbitmq:3-management
     ports:

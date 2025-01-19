@@ -15,4 +15,4 @@ connections:
     iot-controller:
       port: 8080
       path: "/devices/%d/messages"
-      host: "http://localhost"
+      host: iot-controller
