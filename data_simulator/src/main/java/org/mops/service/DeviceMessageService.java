@@ -16,9 +16,11 @@ public class DeviceMessageService {
 
     private final DeviceMessageClient client;
     private final ScheduledExecutorService executor;
+    private final MetricsService metricsService;
 
-    public DeviceMessageService(DataSimulationProperties dataProperties, ConnectionProperties connectionProperties) {
+    public DeviceMessageService(DataSimulationProperties dataProperties, MetricsService metricsService, ConnectionProperties connectionProperties) {
         this.dataProperties = dataProperties;
+        this.metricsService = metricsService;
 
         ConnectionSpecs iotConnectionSpecs = connectionProperties.getConnectionSpecs().get("iot-controller");
         this.client = new DeviceMessageClient(iotConnectionSpecs, dataProperties.getIndicationBound());
@@ -36,6 +38,7 @@ public class DeviceMessageService {
             executor.scheduleAtFixedRate(() -> {
                         try {
                             client.generateAndSendDeviceMessage(deviceId);
+                            metricsService.incrementDeviceCounter(deviceId);
                         } catch (IOException | InterruptedException e) {
                             System.out.println("request failed");
 //                            throw new RuntimeException(e);

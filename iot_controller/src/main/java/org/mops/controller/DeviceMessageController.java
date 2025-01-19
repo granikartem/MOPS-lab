@@ -3,6 +3,7 @@ package org.mops.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.mops.dto.DeviceMessageDto;
 import org.mops.model.DeviceMessage;
+import org.mops.service.MetricsService;
 import org.mops.service.PersistenceService;
 import org.mops.service.RuleEngineService;
 import org.mops.service.ValidationService;
@@ -15,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class DeviceMessageController {
+    private final MetricsService metricsService;
     private final ValidationService validationService;
     private final PersistenceService persistenceService;
     private final RuleEngineService ruleEngineService;
 
-    public DeviceMessageController(ValidationService validationService, PersistenceService persistenceService, RuleEngineService ruleEngineService) {
+    public DeviceMessageController(MetricsService metricsService, ValidationService validationService, PersistenceService persistenceService, RuleEngineService ruleEngineService) {
+        this.metricsService = metricsService;
         this.validationService = validationService;
         this.persistenceService = persistenceService;
         this.ruleEngineService = ruleEngineService;
@@ -28,10 +31,13 @@ public class DeviceMessageController {
     @PostMapping("/devices/{deviceId}/messages")
     public ResponseEntity<String> sendMessage(@PathVariable("deviceId") int deviceId, @RequestBody DeviceMessageDto message) throws JsonProcessingException {
         System.out.println(message);
+        metricsService.incrementDeviceReceived(deviceId);
         boolean isValid = validationService.validate(deviceId, message);
         if (isValid) {
             DeviceMessage deviceMessage = persistenceService.saveMessage(message);
             ruleEngineService.passMessage(deviceMessage);
+        } else {
+            metricsService.incrementDeviceInvalid(deviceId);
         }
         System.out.println("success");
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));

@@ -11,10 +11,12 @@ import java.util.Set;
 
 @Service
 public class RuleTriggerService {
+    private final MetricsService metricsService;
     private final RuleTriggerRepository ruleTriggerRepository;
     private final Set<Rule> rules;
 
-    public RuleTriggerService(RuleTriggerRepository ruleTriggerRepository, Set<Rule> rules) {
+    public RuleTriggerService(MetricsService metricsService, RuleTriggerRepository ruleTriggerRepository, Set<Rule> rules) {
+        this.metricsService = metricsService;
         this.ruleTriggerRepository = ruleTriggerRepository;
         this.rules = rules;
 
@@ -35,6 +37,8 @@ public class RuleTriggerService {
                 } else {
                     ruleTrigger.setRuleType("Continuous");
                 }
+
+                metricsService.incrementRuleTrigger(rule.getName());
 
                 ruleTriggerRepository.save(ruleTrigger);
             }
