@@ -41,7 +41,7 @@ public class DeviceMessageService {
                             throw new RuntimeException(e);
                         }
                     },
-                    0, 1000 / dataProperties.getFrequency(), TimeUnit.MILLISECONDS);
+                    0, 5000 / dataProperties.getFrequency(), TimeUnit.MILLISECONDS);
         }
     }
 }

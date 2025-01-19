@@ -1,0 +1,36 @@
+server:
+  port: 6060
+
+spring:
+  application:
+    name: rule-engine
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: password
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: admin
+      password: password
+      authentication-database: admin
+
+rabbitmq:
+  queue-name: deviceMessages
+
+rules:
+  descriptions:
+    -
+      name: 'instantRule1'
+      field: 'indication'
+      comparison-type: 'GREATER_THAN'
+      comparison-value: 30
+      longevity: 1
+    -
+      name: 'continuousRule1'
+      field: 'indication'
+      comparison-type: 'LESS_THAN_OR_EQUALS'
+      comparison-value: 20
+      longevity: 20

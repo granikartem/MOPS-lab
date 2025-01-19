@@ -58,6 +58,9 @@ public class DeviceMessageClient {
 
         System.out.println(messageJson);
         return HttpRequest.newBuilder()
-                .uri(url).POST(HttpRequest.BodyPublishers.ofString(messageJson)).build();
+                .uri(url)
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(messageJson))
+                .build();
     }
 }
