@@ -1,13 +1,23 @@
 ﻿server:
-  port: 9090
+  port: 1010
 
 spring:
   application:
     name: data-simulator
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    prometheus:
+      enabled: true
+
 data-simulation:
+  initial-delay-millis: 10000
   device-count: 10
-  frequency: 100
+  frequency: 10
   indication-bound: 40
 
 connections:
@@ -15,4 +25,4 @@ connections:
     iot-controller:
       port: 8080
       path: "/devices/%d/messages"
-      host: iot-controller
+      host: "http://iot-controller"

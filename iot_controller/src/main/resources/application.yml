@@ -4,6 +4,15 @@ server:
 rabbitmq:
   queue-name: deviceMessages
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    prometheus:
+      enabled: true
+
 spring:
   application:
     name: iot-controller

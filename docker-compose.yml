@@ -9,15 +9,17 @@ services:
     depends_on:
       - rabbitmq
       - mongodb
+      - prometheus
 
   data-simulator:
     build:
       context: data_simulator
       dockerfile: Dockerfile
     ports:
-      - "9090:9090"
+      - "1010:1010"
     depends_on:
       - iot-controller
+      - prometheus
 
   rule-engine:
     build:
@@ -29,6 +31,7 @@ services:
       - iot-controller
       - rabbitmq
       - mongodb
+      - prometheus
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -46,3 +49,22 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: mops
       MONGO_INITDB_ROOT_PASSWORD: password
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: mops
+      GF_SECURITY_ADMIN_PASSWORD: password
+    depends_on:
+      - prometheus

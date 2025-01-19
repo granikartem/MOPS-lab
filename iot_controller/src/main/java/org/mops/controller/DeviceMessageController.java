@@ -27,11 +27,13 @@ public class DeviceMessageController {
 
     @PostMapping("/devices/{deviceId}/messages")
     public ResponseEntity<String> sendMessage(@PathVariable("deviceId") int deviceId, @RequestBody DeviceMessageDto message) throws JsonProcessingException {
+        System.out.println(message);
         boolean isValid = validationService.validate(deviceId, message);
         if (isValid) {
             DeviceMessage deviceMessage = persistenceService.saveMessage(message);
             ruleEngineService.passMessage(deviceMessage);
         }
+        System.out.println("success");
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 }

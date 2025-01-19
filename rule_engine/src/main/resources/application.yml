@@ -18,6 +18,15 @@ spring:
       authentication-database: admin
       database: mops
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    prometheus:
+      enabled: true
+
 rabbitmq:
   queue-name: deviceMessages
 

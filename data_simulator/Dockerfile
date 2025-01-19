@@ -10,4 +10,4 @@ COPY target/data_simulator-1.0-SNAPSHOT.jar /app/data_simulator.jar
 # Команда для выполнения при запуске контейнера
 ENTRYPOINT ["java", "-jar", "/app/data_simulator.jar"]
 
-EXPOSE 9090
+EXPOSE 1010
