@@ -27,6 +27,15 @@ management:
     prometheus:
       enabled: true
 
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        web: DEBUG
+  file:
+    name: iot-controller.log
+
 rabbitmq:
   queue-name: deviceMessages
 

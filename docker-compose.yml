@@ -10,6 +10,7 @@ services:
       - rabbitmq
       - mongodb
       - prometheus
+      - logstash
 
   data-simulator:
     build:
@@ -20,6 +21,7 @@ services:
     depends_on:
       - iot-controller
       - prometheus
+      - logstash
 
   rule-engine:
     build:
@@ -32,6 +34,7 @@ services:
       - rabbitmq
       - mongodb
       - prometheus
+      - logstash
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -68,3 +71,38 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: password
     depends_on:
       - prometheus
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.10.1
+    container_name: logstash
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    ports:
+      - "5044:5044"
+    depends_on:
+      - elasticsearch
+
+  kibana:
+      image: docker.elastic.co/kibana/kibana:7.10.1
+      container_name: kibana
+      environment:
+        ELASTICSEARCH_URL: "http://elasticsearch:9200"
+      ports:
+        - "5601:5601"
+      depends_on:
+        - elasticsearch
+
+volumes:
+  esdata:
+    driver: local

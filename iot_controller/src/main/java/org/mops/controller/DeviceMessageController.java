@@ -30,7 +30,6 @@ public class DeviceMessageController {
 
     @PostMapping("/devices/{deviceId}/messages")
     public ResponseEntity<String> sendMessage(@PathVariable("deviceId") int deviceId, @RequestBody DeviceMessageDto message) throws JsonProcessingException {
-        System.out.println(message);
         metricsService.incrementDeviceReceived(deviceId);
         boolean isValid = validationService.validate(deviceId, message);
         if (isValid) {
@@ -39,7 +38,6 @@ public class DeviceMessageController {
         } else {
             metricsService.incrementDeviceInvalid(deviceId);
         }
-        System.out.println("success");
         return new ResponseEntity<>(HttpStatusCode.valueOf(200));
     }
 }

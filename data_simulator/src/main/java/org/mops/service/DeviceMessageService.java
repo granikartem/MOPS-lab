@@ -41,7 +41,7 @@ public class DeviceMessageService {
                             metricsService.incrementDeviceCounter(deviceId);
                         } catch (IOException | InterruptedException e) {
                             System.out.println("request failed");
-//                            throw new RuntimeException(e);
+                            throw new RuntimeException(e);
                         }
                     },
                     dataProperties.getInitialDelayMillis(), 1000 / dataProperties.getFrequency(), TimeUnit.MILLISECONDS);

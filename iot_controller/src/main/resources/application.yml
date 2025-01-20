@@ -13,6 +13,15 @@ management:
     prometheus:
       enabled: true
 
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        web: DEBUG
+  file:
+    name: iot-controller.log
+
 spring:
   application:
     name: iot-controller
